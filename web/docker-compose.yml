@@ -1,0 +1,20 @@
+php-meetup-web:
+  external_links:
+  - php-meetup-service/php-meetup-service-lb:service
+  labels:
+    io.rancher.container.pull_image: always
+  tty: true
+  image: quay.io/patjmizer/php-meetup-web
+  stdin_open: true
+  environment:
+    - RANDOM_NUMBER_URL=http://service/
+php-meetup-web-lb:
+  ports:
+  - 80:80
+  labels:
+    io.rancher.scheduler.global: 'true'
+  tty: true
+  image: rancher/load-balancer-service
+  links:
+  - php-meetup-web:php-meetup-web
+  stdin_open: true

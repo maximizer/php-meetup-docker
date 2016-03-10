@@ -1,0 +1,18 @@
+php-meetup-service-lb:
+  ports:
+  - 7074:80
+  expose:
+  - 80:80
+  labels:
+    io.rancher.scheduler.global: 'true'
+  tty: true
+  image: rancher/load-balancer-service
+  links:
+  - php-meetup-service:php-meetup-service
+  stdin_open: true
+php-meetup-service:
+  labels:
+    io.rancher.container.pull_image: always
+  tty: true
+  image: quay.io/patjmizer/php-meetup-service
+  stdin_open: true
